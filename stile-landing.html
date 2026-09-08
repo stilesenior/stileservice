@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STILE SERVICE — Postulate</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --verde: #39B54A;
+  --verde-oscuro: #2a8a37;
+  --negro: #111111;
+  --card: #181818;
+  --card2: #1f1f1f;
+  --borde: #2a2a2a;
+  --texto: #ffffff;
+  --muted: #999999;
+  --muted2: #555;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--negro);
+  color: var(--texto);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(17,17,17,0.97);
+  border-bottom: 1px solid var(--borde);
+  padding: 0 20px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 20px; letter-spacing: 2px;
+}
+.nav-logo span { color: var(--verde); }
+.nav-dia {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+  color: var(--verde); text-align: right; line-height: 1.3;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 80px 24px 48px;
+}
+.hero-marca {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(52px, 14vw, 96px);
+  line-height: 0.9; letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.hero-marca span { color: var(--verde); }
+.hero-slogan {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(20px, 5vw, 28px); font-weight: 600;
+  letter-spacing: 3px; color: var(--muted);
+  margin-bottom: 48px; text-transform: uppercase;
+}
+.hero-linea {
+  width: 48px; height: 2px; background: var(--verde);
+  margin: 0 auto 40px;
+}
+.hero-frase {
+  font-size: clamp(15px, 3.5vw, 18px); color: #ccc;
+  line-height: 1.75; max-width: 520px; margin: 0 auto 40px;
+}
+.hero-frase strong { color: var(--verde); font-weight: 500; }
+.hero-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 3px;
+  color: var(--muted2); display: flex; align-items: center;
+  gap: 10px; cursor: pointer;
+}
+.hero-cta::after {
+  content: ''; display: block; width: 32px; height: 1px;
+  background: var(--muted2);
+}
+
+/* SEPARADOR VISUAL */
+.bloque-que {
+  background: var(--card);
+  border-top: 3px solid var(--verde);
+  padding: 48px 24px;
+  max-width: 100%;
+}
+.bloque-que-inner {
+  max-width: 680px; margin: 0 auto;
+}
+.bloque-que-inner h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: clamp(36px, 8vw, 56px);
+  line-height: 1.05; margin-bottom: 16px;
+}
+.bloque-que-inner p {
+  font-size: 17px; color: #bbb; line-height: 1.75;
+  max-width: 580px; margin-bottom: 32px;
+}
+
+/* GRID QUE HACEMOS */
+.hacemos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+@media (max-width: 480px) { .hacemos-grid { grid-template-columns: 1fr; } }
+.hacemos-item {
+  background: var(--negro);
+  padding: 28px 24px;
+  border-top: 2px solid var(--borde);
+}
+.hacemos-item.verde { border-top-color: var(--verde); }
+.hacemos-item h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; margin-bottom: 8px;
+}
+.hacemos-item p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* DIVISOR */
+.divisor { border: none; border-top: 1px solid var(--borde); }
+
+/* PUERTAS */
+.puertas-intro {
+  padding: 64px 24px 40px;
+  max-width: 680px; margin: 0 auto;
+}
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 5px;
+  color: var(--verde); margin-bottom: 12px; display: block;
+}
+.puertas-intro h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: clamp(36px, 8vw, 52px);
+  line-height: 1.05; margin-bottom: 16px;
+}
+.puertas-intro p {
+  font-size: 17px; color: #bbb; line-height: 1.75; max-width: 560px;
+}
+
+.puertas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 0 0 0 0;
+}
+@media (max-width: 640px) { .puertas-grid { grid-template-columns: 1fr; } }
+
+.puerta {
+  background: var(--card);
+  padding: 40px 28px;
+  border-top: 3px solid var(--borde);
+  transition: border-color 0.2s;
+  position: relative; overflow: hidden;
+}
+.puerta:hover { border-top-color: var(--verde); }
+.puerta.activa { border-top-color: var(--verde); background: var(--card2); }
+.puerta-letra {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 96px; font-weight: 900; color: var(--verde);
+  opacity: 0.08; position: absolute; top: 8px; right: 16px;
+  line-height: 1;
+}
+.puerta-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 4px;
+  color: var(--verde); margin-bottom: 14px; display: block;
+}
+.puerta h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(24px, 5vw, 30px); font-weight: 900; line-height: 1.1;
+  margin-bottom: 14px;
+}
+.puerta p { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+.puerta ul { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+.puerta ul li {
+  font-size: 14px; color: #ccc;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.puerta ul li::before { content: '→'; color: var(--verde); flex-shrink: 0; }
+
+.btn-puerta {
+  display: block; width: 100%;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700; letter-spacing: 2px;
+  padding: 16px 24px; text-align: center;
+  background: var(--verde); color: #111; cursor: pointer;
+  border: none; transition: background 0.2s;
+}
+.btn-puerta:hover { background: #45d457; }
+.btn-puerta.secundario {
+  background: transparent; color: var(--verde);
+  border: 1px solid var(--verde);
+}
+.btn-puerta.secundario:hover { background: rgba(57,181,74,0.08); }
+
+/* FORMULARIOS */
+.formulario-wrap {
+  max-width: 680px; margin: 0 auto;
+  padding: 0 24px 80px;
+  display: none;
+}
+.formulario-wrap.visible { display: block; }
+.form-header {
+  border-left: 3px solid var(--verde);
+  padding: 20px 24px; background: var(--card2);
+  margin: 32px 0 28px;
+}
+.form-header h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 900; margin-bottom: 6px;
+}
+.form-header p { font-size: 14px; color: var(--muted); }
+
+.form-grid { display: grid; gap: 18px; }
+.form-grid-2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 480px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+.campo label {
+  display: block; font-size: 12px; font-weight: 500;
+  letter-spacing: 1px; color: var(--muted); margin-bottom: 7px;
+  text-transform: uppercase;
+}
+.campo input, .campo select, .campo textarea {
+  width: 100%; background: var(--card);
+  border: 1px solid var(--borde); color: var(--texto);
+  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 300;
+  padding: 14px 16px; outline: none;
+  transition: border-color 0.2s; border-radius: 0;
+  -webkit-appearance: none;
+}
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--verde); }
+.campo select { cursor: pointer; }
+.campo textarea { resize: vertical; min-height: 110px; }
+
+.form-aviso {
+  font-size: 13px; color: var(--muted); margin: 20px 0;
+  padding: 14px 18px; border-left: 2px solid var(--borde);
+  line-height: 1.65;
+}
+.btn-enviar {
+  width: 100%;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700; letter-spacing: 2px;
+  padding: 18px; background: var(--verde); color: #111;
+  border: none; cursor: pointer; transition: background 0.2s;
+}
+.btn-enviar:hover:not(:disabled) { background: #45d457; }
+.btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.form-success {
+  display: none;
+  background: var(--card2); border-left: 3px solid var(--verde);
+  padding: 28px 24px; margin-top: 20px;
+}
+.form-success h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 900; margin-bottom: 10px;
+}
+.form-success p { font-size: 15px; color: #bbb; line-height: 1.65; }
+
+.form-error {
+  display: none; font-size: 14px; color: #ff5555;
+  margin-top: 12px; padding: 10px 14px; border: 1px solid #ff555533;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--borde);
+  padding: 48px 24px;
+  max-width: 680px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.footer-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 24px; letter-spacing: 2px;
+}
+.footer-logo span { color: var(--verde); }
+.footer-links { display: flex; flex-direction: column; gap: 12px; }
+.footer-link {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-link:hover { color: var(--verde); }
+.footer-link-icon {
+  width: 30px; height: 30px; background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.footer-bottom {
+  font-size: 12px; color: var(--muted2); padding-top: 16px;
+  border-top: 1px solid var(--borde);
+}
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">STILE <span>SERVICE</span></div>
+  <div class="nav-dia" id="nav-dia">Construyendo desde el día 1</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-marca">STILE <span>SERVICE</span></h1>
+  <p class="hero-slogan">Nacimos para acompañarte</p>
+  <div class="hero-linea"></div>
+  <p class="hero-frase">
+    Construyendo la consultora más grande de Latinoamérica<br>
+    y <strong>vos podés ser parte</strong>.
+  </p>
+  <div class="hero-cta" onclick="document.querySelector('.bloque-que').scrollIntoView({behavior:'smooth'})">
+    Ver cómo trabajamos
+  </div>
+</section>
+
+<!-- QUE HACEMOS -->
+<div class="bloque-que reveal">
+  <div class="bloque-que-inner">
+    <h2>Un sistema completo,<br>no un consejo suelto.</h2>
+    <p>No te decimos qué hacer y te dejamos solo. Analizamos tu caso, armamos un plan real y te acompañamos mientras lo ejecutás.</p>
+    <div class="hacemos-grid">
+      <div class="hacemos-item verde">
+        <h3>Diagnóstico personalizado</h3>
+        <p>Analizamos tu situación actual con honestidad. Sin genéricos, sin venta de humo.</p>
+      </div>
+      <div class="hacemos-item">
+        <h3>Método Punto Cero</h3>
+        <p>Plan de acción de 90 días con objetivos claros, problemas detectados y oportunidades concretas.</p>
+      </div>
+      <div class="hacemos-item">
+        <h3>SYSTEM ONE</h3>
+        <p>App propia con equipo de IA disponible las 24 horas. Estrategia, creatividad, datos y ventas en un lugar.</p>
+      </div>
+      <div class="hacemos-item">
+        <h3>Comunidad activa</h3>
+        <p>Capacitaciones, herramientas y personas construyendo junto a vos. No trabajás solo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divisor">
+
+<!-- PUERTAS -->
+<div class="puertas-intro reveal">
+  <span class="section-label">Postulate</span>
+  <h2>Elegí tu puerta<br>de entrada.</h2>
+  <p>No atendemos a todos. Evaluamos cada caso y trabajamos con quienes realmente estén listos para comprometerse con el proceso. Si tu caso es seleccionado, te contactamos por WhatsApp.</p>
+</div>
+
+<div class="puertas-grid reveal">
+  <div class="puerta" id="puerta-a">
+    <span class="puerta-letra">A</span>
+    <span class="puerta-tag">Para emprendedores y negocios</span>
+    <h2>Quiero que trabajen con mi caso</h2>
+    <p>Tenés un negocio o una idea y querés estructurarlo, hacerlo crecer o resolver lo que no está funcionando.</p>
+    <ul>
+      <li>Diagnóstico personalizado de tu situación</li>
+      <li>Plan de acción de 90 días</li>
+      <li>Acceso a SYSTEM ONE durante el proceso</li>
+      <li>Seguimiento real semana a semana</li>
+    </ul>
+    <button class="btn-puerta" onclick="abrirFormulario('a')">Postularme</button>
+  </div>
+  <div class="puerta" id="puerta-b">
+    <span class="puerta-letra">B</span>
+    <span class="puerta-tag">Sin fines de lucro</span>
+    <h2>Ayudame a Ayudar</h2>
+    <p>Estás sin trabajo, sin recursos, o recién empezando y no podés pagar un servicio. Este programa existe para vos.</p>
+    <ul>
+      <li>Ofertas laborales en la comunidad</li>
+      <li>Capacitaciones gratuitas en IA y oficios</li>
+      <li>Herramientas de trabajo sin costo</li>
+      <li>Acompañamiento desde cero</li>
+    </ul>
+    <button class="btn-puerta secundario" onclick="abrirFormulario('b')">Postularme</button>
+  </div>
+</div>
+
+<!-- FORMULARIO A -->
+<div class="formulario-wrap" id="form-wrap-a">
+  <div class="form-header">
+    <h3>Postulación — Puerta A</h3>
+    <p>Completá el formulario con honestidad. Evaluamos cada caso individualmente.</p>
+  </div>
+  <form id="form-a" onsubmit="enviarFormulario(event,'a')">
+    <div class="form-grid">
+      <div class="form-grid form-grid-2">
+        <div class="campo">
+          <label>Nombre y apellido</label>
+          <input type="text" name="nombre" required placeholder="Tu nombre completo">
+        </div>
+        <div class="campo">
+          <label>WhatsApp</label>
+          <input type="tel" name="whatsapp" required placeholder="+54 264 000 0000">
+        </div>
+      </div>
+      <div class="campo">
+        <label>Localidad</label>
+        <input type="text" name="localidad" required placeholder="Ciudad y provincia">
+      </div>
+      <div class="campo">
+        <label>¿Tenés un negocio o querés empezar uno?</label>
+        <select name="tipo_negocio" required>
+          <option value="" disabled selected>Seleccioná una opción</option>
+          <option value="tengo_negocio">Tengo un negocio</option>
+          <option value="quiero_empezar">Quiero empezar uno</option>
+          <option value="idea_en_proceso">Tengo una idea en proceso</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Contanos tu situación actual</label>
+        <textarea name="situacion" required placeholder="¿Dónde estás parado hoy? ¿Qué está pasando en tu negocio o emprendimiento?"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Cuál creés que es tu principal problema?</label>
+        <textarea name="problema" required placeholder="Sé honesto. ¿Qué es lo que más te traba o no podés resolver?"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Por qué querés que STILE SERVICE trabaje con tu caso?</label>
+        <textarea name="motivo" required placeholder="Contanos qué te llevó a postularte y qué esperás del proceso."></textarea>
+      </div>
+    </div>
+    <p class="form-aviso">Tu postulación será evaluada. Si tu caso es seleccionado, te contactamos directamente por WhatsApp. No trabajamos con todos — solo con quienes realmente podemos acompañar bien.</p>
+    <button type="submit" class="btn-enviar" id="btn-a">Enviar postulación</button>
+    <div class="form-error" id="error-a">Ocurrió un error al enviar. Intentá de nuevo.</div>
+  </form>
+  <div class="form-success" id="success-a">
+    <h4>Postulación recibida.</h4>
+    <p>Recibimos tu caso. Estamos evaluando las postulaciones y si el tuyo es seleccionado, te contactamos por WhatsApp. Gracias por confiar en el proceso.</p>
+  </div>
+</div>
+
+<!-- FORMULARIO B -->
+<div class="formulario-wrap" id="form-wrap-b">
+  <div class="form-header">
+    <h3>Ayudame a Ayudar — Postulación</h3>
+    <p>Este programa es sin costo. Evaluamos cada caso con el mismo compromiso.</p>
+  </div>
+  <form id="form-b" onsubmit="enviarFormulario(event,'b')">
+    <div class="form-grid">
+      <div class="form-grid form-grid-2">
+        <div class="campo">
+          <label>Nombre y apellido</label>
+          <input type="text" name="nombre" required placeholder="Tu nombre completo">
+        </div>
+        <div class="campo">
+          <label>WhatsApp</label>
+          <input type="tel" name="whatsapp" required placeholder="+54 264 000 0000">
+        </div>
+      </div>
+      <div class="campo">
+        <label>Localidad</label>
+        <input type="text" name="localidad" required placeholder="Ciudad y provincia">
+      </div>
+      <div class="campo">
+        <label>¿Qué necesitás?</label>
+        <select name="necesidad" required>
+          <option value="" disabled selected>Seleccioná una opción</option>
+          <option value="trabajo">Busco trabajo</option>
+          <option value="capacitacion">Quiero capacitarme</option>
+          <option value="herramientas">Necesito herramientas</option>
+          <option value="varias">Varias de las anteriores</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Contanos tu situación</label>
+        <textarea name="situacion" required placeholder="¿Cómo estás hoy? ¿Qué está pasando en tu vida laboral o personal?"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Qué sabés hacer? Oficio, habilidad o experiencia</label>
+        <textarea name="habilidades" required placeholder="No importa si parece poco. Contanos qué sabés hacer, aunque sea algo sencillo."></textarea>
+      </div>
+    </div>
+    <p class="form-aviso">Este programa no tiene costo. Evaluamos los casos y priorizamos según urgencia y posibilidades reales de ayuda. Te contactamos por WhatsApp si podemos trabajar con tu situación.</p>
+    <button type="submit" class="btn-enviar" id="btn-b">Enviar postulación</button>
+    <div class="form-error" id="error-b">Ocurrió un error al enviar. Intentá de nuevo.</div>
+  </form>
+  <div class="form-success" id="success-b">
+    <h4>Postulación recibida.</h4>
+    <p>Recibimos tu caso. Estamos evaluando las postulaciones y si el tuyo es seleccionado, te contactamos por WhatsApp. No estás solo en esto.</p>
+  </div>
+</div>
+
+<hr class="divisor" style="margin-top:8px;">
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <div class="footer-logo">STILE <span>SERVICE</span></div>
+  <div class="footer-links">
+    <a href="https://www.tiktok.com/@german.stileservice" target="_blank" rel="noopener" class="footer-link">
+      <div class="footer-link-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.78 1.52V6.82a4.85 4.85 0 01-1.01-.13z"/></svg>
+      </div>
+      @german.stileservice — TikTok
+    </a>
+    <a href="https://www.instagram.com/stile_service" target="_blank" rel="noopener" class="footer-link">
+      <div class="footer-link-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      @stile_service — Instagram
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vb0000000000000000" target="_blank" rel="noopener" class="footer-link">
+      <div class="footer-link-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      Comunidad PuntoZero — WhatsApp
+    </a>
+  </div>
+  <div class="footer-bottom">
+    © 2026 STILE SERVICE — Día <span id="footer-dia">—</span> de 365 — San Juan, Argentina
+  </div>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://hcbmriytxedecuyekfvm.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_mlrwyA6vX2bnVlYYVi02rQ_NaESJ8IY';
+
+function calcularDia() {
+  const inicio = new Date('2026-01-01T00:00:00');
+  const hoy = new Date();
+  const dia = Math.max(1, Math.min(Math.floor((hoy - inicio) / 86400000) + 1, 365));
+  document.getElementById('nav-dia').textContent = 'Día ' + dia + ' / 365';
+  const fd = document.getElementById('footer-dia');
+  if (fd) fd.textContent = dia;
+}
+calcularDia();
+
+function abrirFormulario(tipo) {
+  const wrapA = document.getElementById('form-wrap-a');
+  const wrapB = document.getElementById('form-wrap-b');
+  const pA = document.getElementById('puerta-a');
+  const pB = document.getElementById('puerta-b');
+  if (tipo === 'a') {
+    wrapA.classList.add('visible');
+    wrapB.classList.remove('visible');
+    pA.classList.add('activa'); pB.classList.remove('activa');
+    setTimeout(() => wrapA.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  } else {
+    wrapB.classList.add('visible');
+    wrapA.classList.remove('visible');
+    pB.classList.add('activa'); pA.classList.remove('activa');
+    setTimeout(() => wrapB.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+async function enviarFormulario(e, tipo) {
+  e.preventDefault();
+  const form = document.getElementById('form-' + tipo);
+  const btn = document.getElementById('btn-' + tipo);
+  const errorEl = document.getElementById('error-' + tipo);
+  const successEl = document.getElementById('success-' + tipo);
+  const fd = new FormData(form);
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  errorEl.style.display = 'none';
+  const tabla = tipo === 'a' ? 'postulaciones_clientes' : 'postulaciones_ayuda';
+  let body = tipo === 'a' ? {
+    nombre: fd.get('nombre'), whatsapp: fd.get('whatsapp'),
+    localidad: fd.get('localidad'), tipo_negocio: fd.get('tipo_negocio'),
+    situacion: fd.get('situacion'), problema: fd.get('problema'),
+    motivo: fd.get('motivo'), estado: 'nueva'
+  } : {
+    nombre: fd.get('nombre'), whatsapp: fd.get('whatsapp'),
+    localidad: fd.get('localidad'), necesidad: fd.get('necesidad'),
+    situacion: fd.get('situacion'), habilidades: fd.get('habilidades'),
+    estado: 'nueva'
+  };
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/' + tabla, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(body)
+    });
+    if (res.ok || res.status === 201) {
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+    } else { throw new Error('Error ' + res.status); }
+  } catch(err) {
+    errorEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Enviar postulación';
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
