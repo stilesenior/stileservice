@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STILE — Panel de Control</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#060606;
+    color:#ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    min-height:100vh;
+  }
+  .verde { color:#4ADE29; }
+
+  /* LOGIN */
+  #login { padding:60px 20px; }
+  .login-box { max-width:340px; margin:0 auto; }
+  .logo { text-align:center; margin-bottom:26px; }
+  .logo-tag { background:#4ADE29; color:#060606; font-weight:900; font-size:13px; padding:5px 9px; }
+  .logo-txt { color:#fff; font-size:14px; letter-spacing:3px; margin-left:8px; font-weight:700; }
+  .card { background:#0e0e0e; border:1px solid #222; border-top:3px solid #4ADE29; padding:26px 22px; }
+  .card-label { font-size:10px; font-weight:700; letter-spacing:3px; color:#4ADE29; margin-bottom:8px; }
+  .card-desc { font-size:13px; color:#aaa; margin-bottom:18px; line-height:1.6; }
+  input, select {
+    width:100%; background:#161616; border:1px solid #222; color:#fff;
+    padding:11px; font-size:14px; margin-bottom:10px; font-family:inherit;
+  }
+  input:focus, select:focus { outline:none; border-color:#4ADE29; }
+  .btn {
+    width:100%; background:#4ADE29; color:#060606; border:none;
+    padding:13px; font-size:13px; font-weight:900; letter-spacing:1.5px; cursor:pointer;
+  }
+  .btn:hover { opacity:.88; }
+  .msg { font-size:12px; margin-top:12px; line-height:1.5; display:none; }
+  .link { color:#4ADE29; cursor:pointer; text-decoration:underline; }
+  .footnote { font-size:11px; color:#555; margin-top:15px; border-top:1px solid #222; padding-top:13px; }
+
+  /* PANEL */
+  #panel { display:none; }
+  .topbar {
+    background:#0e0e0e; border-bottom:1px solid #222; padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .topbar-left { display:flex; align-items:center; gap:8px; }
+  .btn-sm {
+    background:#161616; border:1px solid #333; color:#aaa;
+    padding:7px 13px; font-size:11px; cursor:pointer; font-family:inherit;
+  }
+  .btn-sm:hover { border-color:#4ADE29; color:#4ADE29; }
+  .btn-sm.on { background:#4ADE29; color:#060606; border-color:#4ADE29; font-weight:700; }
+
+  .wrap { max-width:1200px; margin:0 auto; padding:22px 16px 60px; }
+
+  h1 { font-size:22px; margin-bottom:4px; }
+  .sub { font-size:12px; color:#555; margin-bottom:20px; }
+
+  /* KPIs */
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:2px; margin-bottom:22px; }
+  .kpi { background:#0e0e0e; padding:16px 12px; text-align:center; border-top:2px solid #222; }
+  .kpi.v { border-top-color:#4ADE29; }
+  .kpi.b { border-top-color:#4488ff; }
+  .kpi.g { border-top-color:#FFD700; }
+  .kpi.o { border-top-color:#ff8c00; }
+  .kpi-n { font-size:26px; font-weight:800; color:#4ADE29; line-height:1; margin-bottom:5px; }
+  .kpi.b .kpi-n { color:#4488ff; }
+  .kpi.g .kpi-n { color:#FFD700; }
+  .kpi.o .kpi-n { color:#ff8c00; }
+  .kpi-l { font-size:10px; color:#666; line-height:1.35; }
+
+  /* TABLA */
+  .tbl-wrap { overflow-x:auto; background:#0e0e0e; border:1px solid #222; }
+  table { width:100%; border-collapse:collapse; min-width:820px; }
+  th {
+    background:#161616; color:#888; font-size:10px; font-weight:700;
+    letter-spacing:1px; text-transform:uppercase; padding:11px 12px;
+    text-align:left; border-bottom:1px solid #222; white-space:nowrap;
+  }
+  td { padding:10px 12px; border-bottom:1px solid #161616; font-size:12px; color:#aaa; }
+  tr:hover td { background:rgba(255,255,255,.02); }
+  td input, td select { margin:0; padding:6px 8px; font-size:11px; }
+
+  .nombre { color:#fff; font-weight:600; font-size:12.5px; }
+  .email { color:#555; font-size:10px; }
+  .badge { font-size:10px; font-weight:700; padding:3px 8px; letter-spacing:.5px; }
+  .b-free { background:#222; color:#888; }
+  .b-plus { background:rgba(68,136,255,.15); color:#4488ff; }
+  .b-pro  { background:rgba(74,222,41,.15); color:#4ADE29; }
+
+  .bar-bg { background:#222; height:4px; width:56px; margin-top:3px; }
+  .bar { height:100%; background:#4ADE29; }
+
+  .empty { text-align:center; padding:50px 20px; color:#555; font-size:13px; }
+  .sync { font-size:11px; color:#555; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="login">
+  <div class="login-box">
+    <div class="logo">
+      <span class="logo-tag">STILE</span><span class="logo-txt">PANEL DE CONTROL</span>
+    </div>
+    <div class="card">
+      <div class="card-label">ACCESO INTERNO</div>
+      <div class="card-desc">Ingresá con tu cuenta de administrador.</div>
+
+      <input type="email" id="email" placeholder="Email" autocomplete="username">
+      <input type="password" id="pass" placeholder="Contraseña" autocomplete="current-password"
+             onkeypress="if(event.key==='Enter')entrar()">
+      <button class="btn" onclick="entrar()">ENTRAR</button>
+
+      <div id="msg" class="msg"></div>
+
+      <div class="footnote">
+        ¿Primera vez? <span class="link" onclick="registrar()">Crear cuenta</span>
+      </div>
+    </div>
+    <div id="estado" style="margin-top:13px;font-size:11px;color:#555;text-align:center;">Conectando...</div>
+  </div>
+</div>
+
+<!-- ═══════════ PANEL ═══════════ -->
+<div id="panel">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="logo-tag">STILE</span><span class="logo-txt">PANEL DE CONTROL</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span class="sync" id="sync"></span>
+      <button class="btn-sm" onclick="cargar()">Actualizar</button>
+      <button class="btn-sm" onclick="salir()">Salir</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h1>Clientes de <span class="verde">SYSTEM ONE</span></h1>
+    <div class="sub">Los clientes aparecen acá al registrarse en la app. Cambiá el plan y la fecha de pago para darles el alta.</div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div style="margin-bottom:12px;display:flex;gap:2px;flex-wrap:wrap;">
+      <button class="btn-sm on" id="f-todos" onclick="filtrar('todos')">Todos</button>
+      <button class="btn-sm" id="f-free" onclick="filtrar('Free')">Free</button>
+      <button class="btn-sm" id="f-plus" onclick="filtrar('Plus')">Plus</button>
+      <button class="btn-sm" id="f-pro" onclick="filtrar('Pro')">Pro</button>
+      <button class="btn-sm" id="f-alerta" onclick="filtrar('alerta')">Con alerta</button>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>WhatsApp</th>
+            <th>Plan</th>
+            <th>Fecha pago</th>
+            <th>Vence</th>
+            <th>Actividad</th>
+            <th>Día del plan</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="8" class="empty">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══ CONFIGURACIÓN ═══
+var URL_SB = 'https://uyujekukxtpcmwihugfs.supabase.co';
+var KEY_SB = 'sb_publishable_sKFFRjTjsu9vuMjfF7uJBg_VZ2IcNvO';
+
+var sb = null;
+var clientes = [];
+var filtroActual = 'todos';
+
+// ═══ INICIALIZACIÓN ═══
+(function init() {
+  var est = document.getElementById('estado');
+  if (typeof supabase === 'undefined') {
+    est.textContent = 'No se pudo cargar la librería. Revisá tu conexión o desactivá el bloqueador de anuncios.';
+    est.style.color = '#ff4040';
+    return;
+  }
+  try {
+    sb = supabase.createClient(URL_SB, KEY_SB);
+    est.textContent = 'Conexión lista';
+    est.style.color = '#4ADE29';
+    verSesion();
+  } catch (e) {
+    est.textContent = 'Error: ' + e.message;
+    est.style.color = '#ff4040';
+  }
+})();
+
+function aviso(texto, color) {
+  var m = document.getElementById('msg');
+  m.textContent = texto;
+  m.style.color = color || '#ff4040';
+  m.style.display = 'block';
+}
+
+// ═══ AUTENTICACIÓN ═══
+async function verSesion() {
+  try {
+    var r = await sb.auth.getSession();
+    if (r.data && r.data.session) {
+      await validarAdmin(r.data.session.user.email);
+    }
+  } catch (e) { console.error(e); }
+}
+
+async function entrar() {
+  if (!sb) { aviso('Sin conexión al servidor.'); return; }
+  var email = document.getElementById('email').value.trim();
+  var pass = document.getElementById('pass').value;
+  if (!email || !pass) { aviso('Completá email y contraseña.'); return; }
+
+  var r = await sb.auth.signInWithPassword({ email: email, password: pass });
+  if (r.error) { aviso('Email o contraseña incorrectos.'); return; }
+  await validarAdmin(email);
+}
+
+async function registrar() {
+  if (!sb) { aviso('Sin conexión al servidor.'); return; }
+  var email = document.getElementById('email').value.trim();
+  var pass = document.getElementById('pass').value;
+  if (!email || !pass) { aviso('Completá email y contraseña.'); return; }
+  if (pass.length < 6) { aviso('La contraseña necesita al menos 6 caracteres.'); return; }
+
+  var r = await sb.auth.signUp({ email: email, password: pass });
+  if (r.error) { aviso('No se pudo crear: ' + r.error.message); return; }
+  aviso('Cuenta creada. Ahora tocá ENTRAR con los mismos datos.', '#4ADE29');
+}
+
+async function validarAdmin(email) {
+  var r = await sb.from('admins').select('email').eq('email', email).maybeSingle();
+  if (r.error) { aviso('Error verificando permisos: ' + r.error.message); return; }
+  if (!r.data) {
+    aviso('Tu cuenta no tiene permisos de administrador.');
+    await sb.auth.signOut();
+    return;
+  }
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('panel').style.display = 'block';
+  cargar();
+}
+
+async function salir() {
+  await sb.auth.signOut();
+  location.reload();
+}
+
+// ═══ CARGA DE CLIENTES ═══
+async function cargar() {
+  var s = document.getElementById('sync');
+  s.textContent = 'Cargando...';
+  s.style.color = '#FFD700';
+  try {
+    var r = await sb.from('USERS').select('*').order('CREATED_AT', { ascending: false });
+    if (r.error) throw r.error;
+    clientes = r.data || [];
+    s.textContent = 'Actualizado';
+    s.style.color = '#4ADE29';
+    pintar();
+  } catch (e) {
+    s.textContent = 'Error al cargar';
+    s.style.color = '#ff4040';
+    console.error(e);
+  }
+}
+
+async function editar(id, campo, valor) {
+  var s = document.getElementById('sync');
+  s.textContent = 'Guardando...';
+  s.style.color = '#FFD700';
+
+  var c = clientes.find(function(x){ return x.ID === id; });
+  if (c) c[campo] = valor;
+
+  var upd = {};
+  upd[campo] = valor || null;
+
+  try {
+    var r = await sb.from('USERS').update(upd).eq('ID', id);
+    if (r.error) throw r.error;
+    s.textContent = 'Guardado';
+    s.style.color = '#4ADE29';
+    pintar();
+  } catch (e) {
+    s.textContent = 'Error al guardar';
+    s.style.color = '#ff4040';
+    console.error(e);
+  }
+}
+
+// ═══ CÁLCULOS ═══
+function vencimiento(fecha) {
+  if (!fecha) return '';
+  var d = new Date(fecha + 'T00:00:00');
+  d.setDate(d.getDate() + 30);
+  return d.toISOString().split('T')[0];
+}
+
+function diasPara(fecha) {
+  if (!fecha) return null;
+  var hoy = new Date(); hoy.setHours(0,0,0,0);
+  return Math.floor((new Date(fecha + 'T00:00:00') - hoy) / 86400000);
+}
+
+function diaPlan(fecha) {
+  if (!fecha) return null;
+  var hoy = new Date(); hoy.setHours(0,0,0,0);
+  var d = Math.floor((hoy - new Date(fecha + 'T00:00:00')) / 86400000) + 1;
+  return d < 1 ? null : Math.min(d, 90);
+}
+
+function diasSinEntrar(ts) {
+  if (!ts) return null;
+  return Math.floor((new Date() - new Date(ts)) / 86400000);
+}
+
+function tieneAlerta(c) {
+  var plan = c.PLAN || 'Free';
+  if (plan === 'Free') return false;
+  var v = vencimiento(c.FECHA_PAGO);
+  var dv = v ? diasPara(v) : null;
+  var dp = diaPlan(c.FECHA_PAGO);
+  var sa = diasSinEntrar(c.ULTIMO_ACCESO);
+  return (dv !== null && dv <= 5) || (dp !== null && dp >= 80) || (sa !== null && sa >= 7);
+}
+
+function esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
+
+// ═══ FILTROS ═══
+function filtrar(f) {
+  filtroActual = f;
+  ['todos','free','plus','pro','alerta'].forEach(function(k){
+    var b = document.getElementById('f-' + k);
+    if (b) b.className = 'btn-sm';
+  });
+  var id = 'f-' + (f === 'todos' ? 'todos' : f === 'alerta' ? 'alerta' : f.toLowerCase());
+  var activo = document.getElementById(id);
+  if (activo) activo.className = 'btn-sm on';
+  pintar();
+}
+
+// ═══ RENDER ═══
+function pintar() {
+  var lista = clientes.filter(function(c) {
+    var plan = c.PLAN || 'Free';
+    if (filtroActual === 'todos') return true;
+    if (filtroActual === 'alerta') return tieneAlerta(c);
+    return plan === filtroActual;
+  });
+
+  var tb = document.getElementById('tbody');
+
+  if (lista.length === 0) {
+    tb.innerHTML = '<tr><td colspan="8" class="empty">' +
+      (clientes.length === 0
+        ? 'Todavía no hay clientes registrados en SYSTEM ONE'
+        : 'Ningún cliente coincide con este filtro') +
+      '</td></tr>';
+  } else {
+    tb.innerHTML = lista.map(function(c) {
+      var plan = c.PLAN || 'Free';
+      var fp = c.FECHA_PAGO || '';
+      var esPago = plan !== 'Free';
+
+      // Vencimiento
+      var venceTd = '<span style="color:#444">—</span>';
+      if (fp && esPago) {
+        var v = vencimiento(fp);
+        var d = diasPara(v);
+        var col = d < 0 ? '#ff4040' : (d <= 5 ? '#ff8c00' : '#aaa');
+        venceTd = '<span style="color:' + col + ';font-weight:600">' + v +
+                  (d < 0 ? ' ⚠' : '') + '</span>';
+      }
+
+      // Actividad
+      var act = diasSinEntrar(c.ULTIMO_ACCESO);
+      var actTd = '<span style="color:#444;font-size:10px">Nunca entró</span>';
+      if (act !== null) {
+        var ca = act >= 7 ? '#ff8c00' : '#888';
+        actTd = '<span style="color:' + ca + ';font-size:11px">' +
+                (act === 0 ? 'Hoy' : 'Hace ' + act + 'd') +
+                (act >= 7 ? ' ⚠' : '') + '</span>';
+      }
+
+      // Día del plan
+      var dp = diaPlan(fp);
+      var dpTd = '<span style="color:#444">—</span>';
+      if (dp !== null && esPago) {
+        var pct = Math.round(dp / 90 * 100);
+        var cb = dp >= 80 ? '#FFD700' : '#4ADE29';
+        dpTd = '<div style="font-size:11px;color:#fff">' + dp + ' / 90' +
+               (dp >= 80 ? ' 🔔' : '') + '</div>' +
+               '<div class="bar-bg"><div class="bar" style="width:' + pct + '%;background:' + cb + '"></div></div>';
+      }
+
+      var clasePlan = plan === 'Pro' ? 'b-pro' : (plan === 'Plus' ? 'b-plus' : 'b-free');
+
+      return '<tr>' +
+        '<td><div class="nombre">' + esc(c.NOMBRE || 'Sin nombre') + '</div>' +
+        '<div class="email">' + esc(c.EMAIL) + '</div></td>' +
+
+        '<td><input type="text" value="' + esc(c.WHATSAPP) + '" placeholder="+549..." ' +
+        'onchange="editar(\'' + c.ID + '\',\'WHATSAPP\',this.value)"></td>' +
+
+        '<td><select onchange="editar(\'' + c.ID + '\',\'PLAN\',this.value)" class="' + clasePlan + '">' +
+        '<option' + (plan==='Free'?' selected':'') + '>Free</option>' +
+        '<option' + (plan==='Plus'?' selected':'') + '>Plus</option>' +
+        '<option' + (plan==='Pro'?' selected':'') + '>Pro</option>' +
+        '</select></td>' +
+
+        '<td><input type="date" value="' + fp + '" ' +
+        'onchange="editar(\'' + c.ID + '\',\'FECHA_PAGO\',this.value)"></td>' +
+
+        '<td>' + venceTd + '</td>' +
+        '<td>' + actTd + '</td>' +
+        '<td>' + dpTd + '</td>' +
+
+        '<td><select onchange="editar(\'' + c.ID + '\',\'ESTADO\',this.value)">' +
+        ['Nuevo','En seguimiento','Activo','Vencido','Inactivo'].map(function(e){
+          return '<option' + (c.ESTADO===e?' selected':'') + '>' + e + '</option>';
+        }).join('') +
+        '</select></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  pintarKpis();
+}
+
+function pintarKpis() {
+  var total = clientes.length;
+  var free = clientes.filter(function(c){ return (c.PLAN||'Free') === 'Free'; }).length;
+  var plus = clientes.filter(function(c){ return c.PLAN === 'Plus' && c.ESTADO === 'Activo'; }).length;
+  var pro  = clientes.filter(function(c){ return c.PLAN === 'Pro'  && c.ESTADO === 'Activo'; }).length;
+  var mrr = plus * 20 + pro * 100;
+  var conv = total > 0 ? ((plus + pro) / total * 100).toFixed(1) : '0.0';
+
+  var porVencer = clientes.filter(function(c){
+    if ((c.PLAN||'Free') === 'Free' || !c.FECHA_PAGO) return false;
+    var d = diasPara(vencimiento(c.FECHA_PAGO));
+    return d !== null && d >= 0 && d <= 5;
+  }).length;
+
+  var renovar = clientes.filter(function(c){
+    if ((c.PLAN||'Free') === 'Free') return false;
+    var d = diaPlan(c.FECHA_PAGO);
+    return d !== null && d >= 80;
+  }).length;
+
+  var inactivos = clientes.filter(function(c){
+    var d = diasSinEntrar(c.ULTIMO_ACCESO);
+    return d !== null && d >= 7;
+  }).length;
+
+  var html =
+    '<div class="kpi"><div class="kpi-n">' + total + '</div><div class="kpi-l">Clientes totales</div></div>' +
+    '<div class="kpi"><div class="kpi-n">' + free + '</div><div class="kpi-l">Plan Free</div></div>' +
+    '<div class="kpi b"><div class="kpi-n">' + plus + '</div><div class="kpi-l">Plus activos</div></div>' +
+    '<div class="kpi v"><div class="kpi-n">' + pro + '</div><div class="kpi-l">Pro activos</div></div>' +
+    '<div class="kpi g"><div class="kpi-n">$' + mrr + '</div><div class="kpi-l">Ingreso mensual USD</div></div>' +
+    '<div class="kpi"><div class="kpi-n">' + conv + '%</div><div class="kpi-l">Conversión a pago</div></div>';
+
+  if (porVencer > 0) html += '<div class="kpi o"><div class="kpi-n">' + porVencer + '</div><div class="kpi-l">Vencen en 5 días</div></div>';
+  if (renovar > 0)   html += '<div class="kpi g"><div class="kpi-n">' + renovar + '</div><div class="kpi-l">🔔 Día 80+ renovación</div></div>';
+  if (inactivos > 0) html += '<div class="kpi o"><div class="kpi-n">' + inactivos + '</div><div class="kpi-l">⚠ Sin entrar 7+ días</div></div>';
+
+  document.getElementById('kpis').innerHTML = html;
+}
+</script>
+
+</body>
+</html>
